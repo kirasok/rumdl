@@ -1045,6 +1045,13 @@ fn reflow_elements(elements: &[Element], options: &ReflowOptions) -> Vec<String>
         let element_str = format!("{element}");
         let element_len = element.len();
 
+        match element {
+            Element::Link(element) | Element::ReferenceLink(element) | Element::EmptyReferenceLink(element) | Element::ShortcutReference(element) | Element::InlineImage(element)) | Element::ReferenceImage(element) | Element::EmptyReferenceImage(element) | Element::LinkedImage(element) => {
+                element_len = element.alt.len()
+            }
+            _ => {}
+        }
+
         // For text elements that might need breaking
         if let Element::Text(text) = element {
             // Check if original text had leading whitespace
